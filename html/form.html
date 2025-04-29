@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Signup Form</title>
+    <link rel="stylesheet" type="text/css" href="../CSS/form.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head> 
+<body>
+    <div class="container">
+        <div class="form-influencer">
+            <form action="log-in.php" method="POST" id="influencerForm">
+                <h1>MASUKAN DATA</h1>
+                <div class="input-box">
+                    <label for="foto">Foto Profile</label>
+                    <input type="file" name="foto_profile" id="foto" required>
+                    
+                    <label for="nama">Nama</label>
+                    <input type="text" name="nama" id="nama" placeholder="Nama" required>
+                    
+                    <label for="nomor">Phone Number</label>
+                    <input type="tel" name="nomor_hp" id="nomor" placeholder="Phone number" required>
+                    
+                    <label for="tanggal">Tanggal Lahir</label>
+                    <input type="date" name="tanggal_lahir" id="tanggal" required>
+                    
+                    <label for="kota">Kota</label>
+                    <select name="kota" id="kota">
+                        <option value="">Pilih Kota</option>
+                    </select>
+                    <label for="instagram">Instagram</label>
+                    <input type="url" name="instagram" id="instagram" placeholder="Instagram" required>
+                    
+                    <label for="tiktok">Tiktok</label>
+                    <input type="url" name="tiktok" id="tiktok" placeholder="Tiktok" required>
+                    
+                    <label for="youtube">Youtube</label>
+                    <input type="url" name="youtube" id="youtube" placeholder="Youtube">
+                    
+                    <label for="facebook">Facebook</label>
+                    <input type="url" name="facebook" id="facebook" placeholder="Facebook">
+                </div>
+                <button type="submit">Kirim</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="../JS/form.js"></script>
+</body>
+</html>

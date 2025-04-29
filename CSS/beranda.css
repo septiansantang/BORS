@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap');
+
+:root{
+    --primary-colour :#3572EF;
+    --primary-colour-dark:#050C9C;
+    --text-dark:#3ABEF9;
+    --text-ligth:#A7E6FF;
+    --white:#ffffff;
+    --max-widht: 1200px;
+    --header-font:"Lato","Oswald";
+}
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+img{
+    width: 100%;
+    border-radius: 50%;
+}
+
+.container{
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar{
+    background-color: var(--primary-colour);
+    padding: 24px;
+    width: 260px;
+    box-sizing: border-box;
+    flex-direction: column;
+}
+.main{
+    flex-grow: 1;
+}
+
+.sidebar a{
+    text-decoration: none;
+}
+
+.sidebar .bxs-coffee-bean{
+    color: var(--text-ligth);
+}
+
+.sidebar .description-header{
+    margin-top: 16px;
+    color: var(--text-ligth);
+    font-size: 24px;
+    font-weight: 600;
+    font-family: var(--header-font);
+}
+
+.sidebar .header .list-item{
+    padding: 12px 10px; 
+    display: flex;
+    flex-direction: row;
+    background-color: var(--primary-colour-dark);
+    border-radius: 8px;
+    align-items: center;
+    height: 40px;
+    box-sizing: border-box;
+}
+
+.sidebar .header .list-item .bxs-coffee-bean{
+    margin-right: 10px;
+}
+
+.sidebar .header .list-item .illustration{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    margin: 10px 0 22px 0;
+    box-sizing: border-box;
+
+}
+
+
+.sidebar .tab .list-item .description-header{
+    font-family: var(--header-font);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 16px;
+    color: var(--text-ligth);
+}
+
+.sidebar .tab .list-item i{
+    margin-right: 12px;
+    color: var(--text-ligth);
+    font-size: 20px;
+}
+
+.sidebar .tab .list-item{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 10px;
+    border-radius: 8px;
+    align-items: center;
+    width :212px;
+    box-sizing: border-box;
+    transition: all ease-in-out 0.2s;
+
+}
+
+.sidebar .tab .list-item:hover  {
+    background-color: var(--primary-colour-dark);
+    transition: all ease-in-out 0.2s;
+}
