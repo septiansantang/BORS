@@ -8,7 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
-    <a class="back" href="../index.html"><i class='bx bxs-chevron-left'></i></a>
+    <a class="back" href="../index.php"><i class='bx bxs-chevron-left'></i></a>
     <div class="container">
         <!-- Login Form -->
         <div class="form-box login" id="login">
