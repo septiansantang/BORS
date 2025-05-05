@@ -316,11 +316,86 @@ color: var(--primary-colour-dark);
 
 @media (width > 768px){
 
-    main{
-    background-color: #050C9C;
+    main {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding-block: 2rem;
+        background: linear-gradient(to bottom, white, var(--text-ligth)); 
     }
 
-   
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translatex(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translatex(0);
+        }
+    }
+    
+    main img {
+        width: 100%;
+        max-width: 300px;
+        left: -20px;
+        height: auto;
+        border-radius: 0 70px 70px 0;
+        animation: fadeIn 1s ease-in-out;
+        border-bottom:#76cbec 5px solid ;
+        background-image: url("../assets/Desain tanpa judul.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
+    .about_section .container {
+        display: flex;
+        grid-template-columns: 1fr 1fr; /* Dua kolom: satu untuk gambar, satu untuk teks */
+        align-items: center; /* Menyelaraskan konten secara vertikal */
+        gap: 0rem; /* Jarak antara gambar dan teks */
+    }
+    .about_section, .how_to_section {
+        display: grid;
+        padding: 2rem 0rem;
+        text-align: center;
+        background-color: var(--text-ligth);
+        margin-bottom: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .about_section .text_content {
+        text-align: center;
+        font-size: 1.75rem;
+        line-height: 2;
+        font-weight: 400;
+        border-radius: 50px;    
+        
+    }
+
+    .about_section h2, .how_to_section h2 {
+        font-size: 2rem;
+        color: var(--primary-colour);
+        margin-bottom: 1rem;
+    }
+
+    .about_section p, .how_to_section ol {
+        font-size: 1.rem;
+        color:var(--primary-colour);
+        line-height: 1.5;
+    }
+
+    .how_to_section ol {
+        text-align: left;
+        margin: 0 auto;
+        max-width: 600px;
+        padding-left: 1.5rem;
+    }
+
+    .how_to_section ol li {
+        margin-bottom: 0.5rem;
+    }
+    
     nav {
         position: static;
         padding-block: 2rem 0;
@@ -428,10 +503,10 @@ color: var(--primary-colour-dark);
 }
 
 .how_to_image {
-    width: 300px; /* Atur ukuran sesuai kebutuhan */
-    height: auto; /* Menjaga rasio aspek gambar */
+    width: 300px; 
+    height: auto; 
     display: block;
-    margin: 0 auto; /* Memusatkan gambar */
+    margin: 0 auto;
 }
 
 
