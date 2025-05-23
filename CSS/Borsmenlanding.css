@@ -269,94 +269,20 @@ color: var(--primary-colour-dark);
     color: var(--text-ligth);
     text-align: center;
 }
+footer{
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+     background: linear-gradient(90deg, var(--primary-colour) 0%, var(--primary-colour-dark) 100%);
+}
+footer .bar{
+    font-size: .9rem;
+    color: var(--text-ligth);
+}
 
 @media (width > 768px){
-
-    main {
-        padding-block: 2rem;
-        justify-content: center;
-        background: linear-gradient(to bottom, white, var(--text-dark)); 
-    }
-    .video_section {
-        position: relative;
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: transparent; /* Background fallback */
-    }
-    
-    .animation-video {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; 
-        border-radius: 10px; 
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Opsional: Tambahkan bayangan */
-    }
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translatex(-100px);
-        }
-        to {
-            opacity: 1;
-            transform: translatex(0);
-        }
-    }    
-    main img {
-        width: 100%;
-        max-width: 300px;
-        left: -20px;
-        height: auto;
-        border-radius: 0 70px 70px 0;
-        animation: fadeIn 1s ease-in-out;
-        border-bottom:#76cbec 5px solid ;
-        background-image: url("../assets/Desain tanpa judul.png");
-        background-size: cover;
-        background-position: center center;
-        background-repeat: no-repeat;
-        overflow: hidden;
-    }
-    
-   section {
-        padding-block: 2rem;
-    }
-    
-    .about_section{
-        padding-block: 2rem;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-    }
-    .text_content{
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-        justify-content: center;
-       
-    }
-            .text_content h1 {
-            font-size: 3rem;
-            font-weight: 500;
-            text-align: center;
-            font-family: 'Cal Sans', sans-serif;
-            background: none; /* Hapus gradien jika perlu */
-            -webkit-text-fill-color: initial; /* Atur ulang properti */
-            color: var(--primary-colour-dark);
-        }
-                .text_content h1 a {
-             color: var(--text-dark);/* Warna khusus untuk link */
-            text-decoration: none; /* Hilangkan garis bawah */
-            font-weight: bold; /* Tambahkan ketebalan */
-        }
-        
-        .text_content h1 a span {
-             /* Warna berbeda untuk <span> */
-            color: var(--primary-colour);
-            font-style: italic; /* Tambahkan gaya miring */
-        }
     nav {
         position: static;
         padding-block: 2rem 0;
@@ -450,7 +376,190 @@ color: var(--primary-colour-dark);
     .header_content :is(h1, p, .bar){
          text-align: left;
     }
+     main {
+        padding-block: 2rem;
+        justify-content: center;
+        background: linear-gradient(to bottom, white, var(--text-dark)); 
+    }
+    .video_section{
+        position: relative;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: transparent; 
+    }
+    
+    .animation-video {
+        width: 100%;
+        height: 100%;
+        object-fit: contain; 
+        border-radius: 10px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Opsional: Tambahkan bayangan */
+    }
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translatex(-100px);
+        }
+        to {
+            opacity: 1;
+            transform: translatex(0);
+        }
+    }    
+    section {
+        padding-block: 2rem;
+    }
+    
+    .about_section{
+        padding-block: 2rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
 
+    .text_content{
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        justify-content: center;
+       
+    }
+    .text_content h1 {
+            font-size: 3rem;
+            font-weight: 500;
+            text-align: center;
+            font-family: 'Cal Sans', sans-serif;
+            background: none; /* Hapus gradien jika perlu */
+            -webkit-text-fill-color: initial; /* Atur ulang properti */
+            color: var(--primary-colour-dark);
+        }
+                .text_content h1 a {
+             color: var(--text-dark);/* Warna khusus untuk link */
+            text-decoration: none; /* Hilangkan garis bawah */
+            font-weight: bold;
+        }
+        
+        .text_content h1 a span {
+            color: var(--primary-colour);
+            font-style: italic;
+        }
+        .tutorial_web {
+            display: flex;
+            flex-direction: row;
+            gap: 1.5rem;
+            justify-content: center;
+            align-items: stretch;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        .tutorial_web_card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            padding: 1.5rem 1.2rem;
+             min-width: 50px;      
+            max-width: 100px;      
+            width: 100%;
+            min-height: 50px;
+            max-height: 100px;
+            transition: 
+                transform 0.2s, 
+                box-shadow 0.2s, 
+                background 0.2s,
+                min-width 0.2s, 
+                max-width 0.2s, 
+                min-height 0.2s, 
+                max-height 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--primary-colour-dark, #222);
+            position: relative;
+        }
+
+        .tutorial_web_card span {
+            font-size: 2.2rem;
+            color: var(--primary-colour,--primary-colour-dark);
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tutorial_web_card:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            background: linear-gradient(120deg, #ffe0ec 0%, #e0f7fa 100%);
+            min-width: 10px;  
+            max-width: 150px;   
+            min-height: 250px;
+        }
+        .tutorial_web_card:hover span {
+            color: var(--secondary-colour, #7eb3ff);
+        }     
+        
+        .arrow-bawah, p {
+            margin-top: 1.2rem;
+            text-align: center;
+            font-size: 1rem;
+            color: var(--primary-colour);
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            display: block;
+        }
+        
+        .tutorial_web_card:hover .arrow-bawah,.tutorial_web_card:hover p {
+            opacity: 1;
+            transform: translateY(5px);
+        }
+    .Pebisnis_section {
+        display: flex;
+        flex-direction: row;
+        padding-block: 2rem;
+        gap: 2rem;
+    }
+    .Pebisnis_section .container_foto,
+    .Pebisnis_section .container_explanation {
+        flex: 1 1 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .Pebisnis_section .video_section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    }
+    .Pebisnis_section .container_foto {
+        order: 2;
+    }
+    .Pebisnis_section .container_explanation {
+        order: 1;
+    }
+        @media (max-width: 700px) {
+            .tutorial_web {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+            }
+            .tutorial_web_card {
+                width: 90%;
+                min-width: unset;
+            }
+        }
+        
+    footer .bar{
+        font-size: 1.1rem;
+        color: var(--text-ligth);
+    }
 }
 
 @media (width > 1024px){
