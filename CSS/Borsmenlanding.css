@@ -10,6 +10,9 @@
     --max-widht: 1200px;
     --header-font:"Lato","Oswald";
 }
+html {
+    scroll-behavior: smooth;
+}
 
 *{
     padding: 0;
@@ -65,7 +68,9 @@ h1 a {
 h1 a span {
     color: var(--primary-colour);
     font-style: italic;
+
 }
+
 
 .logo a{
     font-size: 1.75rem;
@@ -433,7 +438,7 @@ footer .bar{
         padding-block: 2rem;
     }
     
-    .about_section{
+    .influencer_section {
         padding-block: 2rem;
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -606,7 +611,34 @@ footer .bar{
     font-family: "Lato","Oswald";
     transition: color 0.2s, transform 0.2s;
     }
-    
+    .about_section {
+        padding-right: 15rem;
+        padding-left: 15rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+    }
+    .container_about{
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-image: url("../assets/back.png");
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        border-radius: 50px;
+    }
+    .container_about h4{
+        color:black;
+        margin-bottom: 1rem;
+        text-align: center;
+        font-family:"Lato","Oswald";
+    }
     footer {
         padding: 2rem;
         display: flex;
