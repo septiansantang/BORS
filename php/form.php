@@ -1,3 +1,125 @@
+<?php
+session_start();
+
+// Check if user is logged in and is influencer
+if (!isset($_SESSION['username']) || $_SESSION['user_type'] != 'influencer') {
+    header("Location: login.php");
+    exit();
+}
+
+// Initialize variables
+$error = '';
+$success = '';
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    try {
+        // Database connection
+        $host = "localhost";
+        $user = "root";
+        $password = "";
+        $dbname = "borsmen";
+
+        $conn = new mysqli($host, $user, $password, $dbname);
+
+        if ($conn->connect_error) {
+            throw new Exception("Connection failed: " . $conn->connect_error);
+        }
+
+        // Handle file upload
+        if (isset($_FILES['foto_profile']) && $_FILES['foto_profile']['error'] == 0) {
+            $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+            $filename = $_FILES['foto_profile']['name'];
+            $filetype = pathinfo($filename, PATHINFO_EXTENSION);
+
+            if (!in_array(strtolower($filetype), $allowed)) {
+                throw new Exception('Invalid file type. Only jpg, jpeg, png, and gif are allowed.');
+            }
+
+            $new_filename = uniqid() . '.' . $filetype;
+            $upload_path = '../uploads/' . $new_filename;
+
+            if (!move_uploaded_file($_FILES['foto_profile']['tmp_name'], $upload_path)) {
+                throw new Exception('Failed to upload file.');
+            }
+        } else {
+            throw new Exception('Profile photo is required.');
+        }
+
+        // Sanitize and validate other inputs
+        $nama = trim($_POST['nama']);
+        $nomor_hp = trim($_POST['nomor_hp']);
+        $tanggal_lahir = $_POST['tanggal_lahir'];
+        $kota = trim($_POST['kota']);
+        $pengenalan = trim($_POST['pengenalan']);
+        $konten = trim($_POST['konten']);
+        $instagram = trim($_POST['instagram']);
+        $tiktok = trim($_POST['tiktok']);
+        $youtube = !empty($_POST['youtube']) ? trim($_POST['youtube']) : null;
+        $facebook = !empty($_POST['facebook']) ? trim($_POST['facebook']) : null;
+
+        // Validate phone number
+        if (!preg_match("/^[0-9\-\(\)\/\+\s]*$/", $nomor_hp)) {
+            throw new Exception("Invalid phone number format");
+        }
+
+        // Update influencer profile
+        $sql = "UPDATE user_influencer SET 
+                foto_profile = ?,
+                nama = ?,
+                nomor_hp = ?,
+                tanggal_lahir = ?,
+                kota = ?,
+                pengenalan = ?,
+                jenis_konten = ?,
+                instagram = ?,
+                tiktok = ?,
+                youtube = ?,
+                facebook = ?
+                WHERE username = ?";
+
+        $stmt = $conn->prepare($sql);
+        
+        if (!$stmt) {
+            throw new Exception("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("ssssssssssss", 
+            $new_filename,
+            $nama,
+            $nomor_hp,
+            $tanggal_lahir,
+            $kota,
+            $pengenalan,
+            $konten,
+            $instagram,
+            $tiktok,
+            $youtube,
+            $facebook,
+            $_SESSION['username']
+        );
+
+        if ($stmt->execute()) {
+            $_SESSION['profile_completed'] = true;
+            header("Location: dashboard_influencer.php");
+            exit();
+        } else {
+            throw new Exception("Error updating record: " . $stmt->error);
+        }
+
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    } finally {
+        if (isset($stmt)) {
+            $stmt->close();
+        }
+        if (isset($conn)) {
+            $conn->close();
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
