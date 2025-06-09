@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap');
 
+/* Root variables */
 :root {
     --primary-colour: #3572EF;
     --primary-colour-dark: #050C9C;
@@ -11,6 +12,7 @@
     --header-font: "Lato", "Oswald", sans-serif;
 }
 
+/* Global styles */
 * {
     margin: 0;
     padding: 0;
@@ -23,28 +25,27 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(rgba(5, 12, 156, 0.7), rgba(53, 114, 239, 0.7)), 
-                url('../assets/background.jpg') no-repeat;
+    background: linear-gradient(var(--primary-colour-dark), var(--primary-colour));
     background-size: cover;
     background-position: center;
 }
 
+/* Wrapper styles */
 .wrapper {
     width: 420px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.1); /* Using --white with opacity */
     border: 2px solid var(--text-light);
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0 20px rgba(53, 114, 239, 0.3);
+    box-shadow: 0 0 20px rgba(53, 114, 239, 0.3); /* Using --primary-colour with opacity */
     color: var(--white);
     border-radius: 15px;
     padding: 30px 40px;
-    transition: transform 0.3s ease;
 }
 
 .wrapper:hover {
     transform: translateY(-5px);
 }
 
+/* Header styles */
 .wrapper h1 {
     font-size: 36px;
     text-align: center;
@@ -53,6 +54,7 @@ body {
     font-family: "Cal Sans", sans-serif;
 }
 
+/* Input and textarea styles */
 .wrapper .input-box {
     position: relative;
     width: 100%;
@@ -60,25 +62,25 @@ body {
     margin: 25px 0;
 }
 
-.input-box input {
+.input-box input,
+.input-box textarea {
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.1);
     border: 2px solid var(--text-light);
-    outline: none;
-    border-radius: 40px;
-    font-size: 16px;
+    background: rgba(58, 190, 249, 0.1); /* Using --text-dark with opacity */
     color: var(--white);
     padding: 20px 45px 20px 20px;
     transition: all 0.3s ease;
 }
 
-.input-box input:focus {
+.input-box input:focus,
+.input-box textarea:focus {
     border-color: var(--primary-colour);
-    background: rgba(53, 114, 239, 0.1);
+    background: rgba(53, 114, 239, 0.1); /* Using --primary-colour with opacity */
 }
 
-.input-box input::placeholder {
+.input-box input::placeholder,
+.input-box textarea::placeholder {
     color: var(--text-light);
 }
 
@@ -92,6 +94,7 @@ body {
     transition: 0.3s;
 }
 
+/* User type selection styles */
 .wrapper .user-type {
     margin: 25px 0;
     text-align: center;
@@ -108,15 +111,16 @@ body {
     cursor: pointer;
     padding: 8px 20px;
     border-radius: 20px;
-    background: rgba(53, 114, 239, 0.2);
+    background: rgba(53, 114, 239, 0.2); /* Using --primary-colour with opacity */
     transition: 0.3s;
     color: var(--text-light);
 }
 
 .user-type label:hover {
-    background: rgba(53, 114, 239, 0.3);
+    background: rgba(53, 114, 239, 0.3); /* Using --primary-colour with opacity */
 }
 
+/* Button styles */
 .wrapper .btn {
     width: 100%;
     height: 45px;
@@ -124,7 +128,7 @@ body {
     border: none;
     outline: none;
     border-radius: 40px;
-    box-shadow: 0 5px 15px rgba(53, 114, 239, 0.3);
+    box-shadow: 0 5px 15px rgba(53, 114, 239, 0.3); /* Using --primary-colour with opacity */
     cursor: pointer;
     font-size: 16px;
     color: var(--white);
@@ -137,6 +141,7 @@ body {
     transform: translateY(-2px);
 }
 
+/* Register link styles */
 .wrapper .register-link {
     font-size: 15px;
     text-align: center;
@@ -151,15 +156,16 @@ body {
 }
 
 .register-link p a:hover {
-    color: var(--primary-colour);
+    color: var(--text-dark);
     text-decoration: underline;
 }
 
+/* Error message styles */
 .error-message {
-    color: #ff6b6b;
+    color: #ff6b6b; /* This is the only color not from variables - for error states */
+    background: rgba(255, 107, 107, 0.1);
     text-align: center;
     margin: 10px 0;
     padding: 10px;
     border-radius: 5px;
-    background: rgba(255, 107, 107, 0.1);
 }
