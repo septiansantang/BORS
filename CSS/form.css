@@ -3,8 +3,8 @@
 
 /* Root variables - match with register.css */
 :root {
-    --primary-colour: #4647E5;      /* Updated to match image */
-    --primary-colour-dark: #1D1CE5; /* Updated to match image */
+    --primary-colour: #3572EF;
+    --primary-colour-dark: #050C9C; 
     --text-dark: #3ABEF9;
     --text-light: #A7E6FF;
     --white: #ffffff;
@@ -25,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-     background: linear-gradient(var(--primary-colour), var(--primary-colour-dark));
+      background: linear-gradient(var(--primary-colour-dark), var(--primary-colour));
       /* Solid background color */
 }
 
