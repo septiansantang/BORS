@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 // Redirect based on user type
                 if ($user['user_type'] == 'business') {
-                    header("Location: dashboard_business.php");
+                    header("Location: beranda_business.php");
                 } else {
                     header("Location: dashboard_influencer.php");
                 }

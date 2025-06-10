@@ -1,87 +1,101 @@
 <?php
 session_start();
 
-// Check if user is logged in and is influencer
-if (!isset($_SESSION['username']) || $_SESSION['user_type'] != 'influencer') {
+// Cek apakah pengguna sudah login dan adalah influencer
+if (!isset($_SESSION['username']) || $_SESSION['user_type'] !== 'influencer') {
     header("Location: login.php");
     exit();
 }
 
-// Initialize variables
+// Inisialisasi variabel
 $error = '';
 $success = '';
 
-// Handle form submission
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        // Database connection
+        // Koneksi database
         $host = "localhost";
         $user = "root";
         $password = "";
         $dbname = "borsmen";
 
         $conn = new mysqli($host, $user, $password, $dbname);
-
         if ($conn->connect_error) {
-            throw new Exception("Connection failed: " . $conn->connect_error);
+            throw new Exception("Koneksi gagal: " . $conn->connect_error);
         }
 
-        // Handle file upload
-        if (isset($_FILES['foto_profile']) && $_FILES['foto_profile']['error'] == 0) {
+        // Tangani unggahan file
+        $new_filename = '';
+        if (isset($_FILES['foto_profile']) && $_FILES['foto_profile']['error'] === UPLOAD_ERR_OK) {
             $allowed = ['jpg', 'jpeg', 'png', 'gif'];
             $filename = $_FILES['foto_profile']['name'];
             $filetype = pathinfo($filename, PATHINFO_EXTENSION);
 
             if (!in_array(strtolower($filetype), $allowed)) {
-                throw new Exception('Invalid file type. Only jpg, jpeg, png, and gif are allowed.');
+                throw new Exception('Jenis file tidak valid. Hanya jpg, jpeg, png, dan gif yang diizinkan.');
             }
 
             $new_filename = uniqid() . '.' . $filetype;
             $upload_path = '../uploads/' . $new_filename;
 
+            if (!is_dir('../Uploads/')) {
+                mkdir('../Uploads/', 0755, true);
+            }
+
             if (!move_uploaded_file($_FILES['foto_profile']['tmp_name'], $upload_path)) {
-                throw new Exception('Failed to upload file.');
+                throw new Exception('Gagal mengunggah file.');
             }
         } else {
-            throw new Exception('Profile photo is required.');
+            throw new Exception('Foto profil wajib diunggah.');
         }
 
-        // Sanitize and validate other inputs
-        $nama = trim($_POST['nama']);
-        $nomor_hp = trim($_POST['nomor_hp']);
-        $tanggal_lahir = $_POST['tanggal_lahir'];
-        $kota = trim($_POST['kota']);
-        $pengenalan = trim($_POST['pengenalan']);
-        $konten = trim($_POST['konten']);
-        $instagram = trim($_POST['instagram']);
-        $tiktok = trim($_POST['tiktok']);
-        $youtube = !empty($_POST['youtube']) ? trim($_POST['youtube']) : null;
-        $facebook = !empty($_POST['facebook']) ? trim($_POST['facebook']) : null;
+        // Sanitasi dan validasi input
+        $nama = trim($_POST['nama'] ?? '');
+        $nomor_hp = trim($_POST['nomor_hp'] ?? '');
+        $tanggal_lahir = $_POST['tanggal_lahir'] ?? '';
+        $kota = trim($_POST['kota'] ?? '');
+        $pengenalan = trim($_POST['pengenalan'] ?? '');
+        $konten = trim($_POST['konten'] ?? '');
+        $link_ig = trim($_POST['instagram'] ?? '');
+        $link_tiktok = trim($_POST['tiktok'] ?? '');
+        $link_youtube = !empty($_POST['youtube']) ? trim($_POST['youtube']) : null;
+        $link_fb = !empty($_POST['facebook']) ? trim($_POST['facebook']) : null;
 
-        // Validate phone number
+        // Validasi input wajib
+        if (empty($nama) || empty($nomor_hp) || empty($tanggal_lahir) || empty($kota) || empty($pengenalan) || empty($konten) || empty($link_ig) || empty($link_tiktok)) {
+            throw new Exception("Semua field wajib diisi kecuali YouTube dan Facebook.");
+        }
+
+        // Validasi nomor telepon
         if (!preg_match("/^[0-9\-\(\)\/\+\s]*$/", $nomor_hp)) {
-            throw new Exception("Invalid phone number format");
+            throw new Exception("Format nomor telepon tidak valid.");
         }
 
-        // Update influencer profile
+        // Validasi URL jika diisi
+        foreach ([$link_ig, $link_tiktok, $link_youtube, $link_fb] as $url) {
+            if (!empty($url) && !filter_var($url, FILTER_VALIDATE_URL)) {
+                throw new Exception("Salah satu URL tidak valid.");
+            }
+        }
+
+        // Perbarui profil influencer
         $sql = "UPDATE user_influencer SET 
                 foto_profile = ?,
-                nama = ?,
+                name = ?,
                 nomor_hp = ?,
                 tanggal_lahir = ?,
                 kota = ?,
                 pengenalan = ?,
-                jenis_konten = ?,
-                instagram = ?,
-                tiktok = ?,
-                youtube = ?,
-                facebook = ?
+                konten = ?,
+                link_ig = ?,
+                link_tiktok = ?,
+                link_youtube = ?,
+                link_fb = ?
                 WHERE username = ?";
 
         $stmt = $conn->prepare($sql);
-        
         if (!$stmt) {
-            throw new Exception("Prepare failed: " . $conn->error);
+            throw new Exception("Gagal menyiapkan query: " . $conn->error);
         }
 
         $stmt->bind_param("ssssssssssss", 
@@ -92,25 +106,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $kota,
             $pengenalan,
             $konten,
-            $instagram,
-            $tiktok,
-            $youtube,
-            $facebook,
+            $link_ig,
+            $link_tiktok,
+            $link_youtube,
+            $link_fb,
             $_SESSION['username']
         );
 
         if ($stmt->execute()) {
             $_SESSION['profile_completed'] = true;
-            header("Location: dashboard_influencer.php");
+            header("Location: http://localhost/BORS?success=Profil influencer berhasil diperbarui");
             exit();
         } else {
-            throw new Exception("Error updating record: " . $stmt->error);
+            throw new Exception("Gagal memperbarui data: " . $stmt->error);
         }
 
     } catch (Exception $e) {
         $error = $e->getMessage();
     } finally {
-        if (isset($stmt)) {
+        // Tutup statement hanya jika valid
+        if (isset($stmt) && is_object($stmt)) {
             $stmt->close();
         }
         if (isset($conn)) {
@@ -121,32 +136,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Form Influencer</title>
-    <link rel="stylesheet" href="../CSS/form.css">
+    <title>Lengkapi Profil Influencer - BORSMEN</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/Form.css">
 </head>
 <body>
     <div class="form-container">
+        <?php if (!empty($error)): ?>
+            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+        <?php endif; ?>
         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="POST" enctype="multipart/form-data">
             <div class="flex-container">
                 <!-- Data Diri Section -->
                 <div class="form-section">
                     <h2>Data Diri</h2>
-                    <label for="foto">Foto Profile</label>
-                    <input type="file" name="foto_profile" id="foto" accept="image/*" onchange="previewImage(event)" required>
-                    <img id="preview" src="#" alt="Preview Foto Profile" class="preview-img"/>
+                    <label for="foto_profile">Foto Profil</label>
+                    <input type="file" name="foto_profile" id="foto_profile" accept="image/*" onchange="previewImage(event)" required>
+                    <img id="preview" src="#" alt="Preview Foto Profil" class="preview-img" style="display: none;"/>
 
                     <label for="nama">Nama</label>
                     <input type="text" name="nama" id="nama" placeholder="Nama" required>
 
-                    <label for="nomor">Phone Number</label>
-                    <input type="tel" name="nomor_hp" id="nomor" placeholder="Phone number" required>
+                    <label for="nomor_hp">Nomor Telepon</label>
+                    <input type="tel" name="nomor_hp" id="nomor_hp" placeholder="Nomor telepon" required>
 
-                    <label for="tanggal">Tanggal Lahir</label>
-                    <input type="date" name="tanggal_lahir" id="tanggal" required>
+                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                    <input type="date" name="tanggal_lahir" id="tanggal_lahir" required>
 
                     <label for="kota">Kota</label>
                     <select name="kota" id="kota" required>
@@ -160,7 +179,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <!-- Konten Section -->
                 <div class="form-section">
                     <h2>Konten</h2>
-
                     <label for="pengenalan">Pengenalan Diri</label>
                     <textarea name="pengenalan" id="pengenalan" placeholder="Ceritakan tentang diri Anda" rows="5" required></textarea>
 
@@ -177,18 +195,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <label for="instagram">Instagram</label>
                     <input type="url" name="instagram" id="instagram" placeholder="Link Instagram" required>
 
-                    <label for="tiktok">Tiktok</label>
-                    <input type="url" name="tiktok" id="tiktok" placeholder="Link Tiktok" required>
+                    <label for="tiktok">TikTok</label>
+                    <input type="url" name="tiktok" id="tiktok" placeholder="Link TikTok" required>
 
-                    <label for="youtube">Youtube</label>
-                    <input type="url" name="youtube" id="youtube" placeholder="Link Youtube">
+                    <label for="youtube">YouTube</label>
+                    <input type="url" name="youtube" id="youtube" placeholder="Link YouTube">
 
                     <label for="facebook">Facebook</label>
                     <input type="url" name="facebook" id="facebook" placeholder="Link Facebook">
                 </div>
             </div>
 
-            <button type="submit" class="btn">Kirim</button>
+            <button type="submit" class="btn">Simpan Profil</button>
         </form>
     </div>
 
@@ -196,7 +214,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         function previewImage(event) {
             const preview = document.getElementById('preview');
             const file = event.target.files[0];
-            
             if (file) {
                 preview.src = URL.createObjectURL(file);
                 preview.style.display = 'block';

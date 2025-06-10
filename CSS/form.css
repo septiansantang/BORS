@@ -3,8 +3,8 @@
 
 /* Root variables - match with register.css */
 :root {
-    --primary-colour: #3572EF;
-    --primary-colour-dark: #050C9C; 
+    --primary-colour: #3572EF;      /* Updated to match image */
+    --primary-colour-dark: #050C9C; /* Updated to match image */
     --text-dark: #3ABEF9;
     --text-light: #A7E6FF;
     --white: #ffffff;
@@ -25,7 +25,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-      background: linear-gradient(var(--primary-colour-dark), var(--primary-colour));
+    background: linear-gradient(var(--primary-colour-dark), var(--primary-colour));
       /* Solid background color */
 }
 
@@ -131,6 +131,26 @@ button:hover {
     display: none;
     margin: 10px 0;
     border: 2px solid var(--text-light);
+}
+
+input[type="file"] {
+    background: none;
+    padding: 10px 0;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .flex-container {
+        flex-direction: column;
+    }
+    
+    .form-section {
+        width: 100%;
+    }
+    
+    .form-container {
+        padding: 20px;
+    }
 }
 
 input[type="file"] {
