@@ -45,7 +45,28 @@ CREATE TABLE kolaborasi (
     id_influencer INT(11) NOT NULL,
     id_bisnis INT(11) NOT NULL,
     detail_kolaborasi TEXT DEFAULT NULL,
+    id_campaign INT(11) DEFAULT NULL,
+    status ENUM('pending', 'diterima', 'ditolak', 'selesai') DEFAULT 'pending',
+    tanggal_pengajuan TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    tanggal_disetujui TIMESTAMP NULL,
+    alasan_penolakan TEXT DEFAULT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (id_influencer) REFERENCES USER_INFLUENCER (id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (id_bisnis) REFERENCES USER_BISNIS (id) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE campaign (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    id_bisnis INT(11) NOT NULL,
+    judul VARCHAR(255) NOT NULL,
+    deskripsi TEXT,
+    target_dana DECIMAL(15,2) NOT NULL,
+    dana_terkumpul DECIMAL(15,2) DEFAULT 0.00,
+    tanggal_mulai DATE NOT NULL,
+    tanggal_selesai DATE NOT NULL,
+    status ENUM('draft', 'aktif', 'selesai', 'batal') DEFAULT 'draft',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_bisnis) REFERENCES USER_BISNIS(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
