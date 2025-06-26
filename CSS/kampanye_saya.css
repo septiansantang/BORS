@@ -1,0 +1,200 @@
+/* (kosong, semua CSS telah dipindahkan ke beranda.css) */
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap');
+
+:root{
+    --primary-colour: #3572EF;
+    --primary-colour-dark: #050C9C;
+    --text-dark: #3ABEF9;
+    --text-ligth: #A7E6FF;
+    --white: #ffffff;
+    --max-widht: 1200px;
+    --header-font: "Lato","Oswald";
+}
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--header-font), sans-serif;
+    background: #f4f8fd;
+    color: var(--primary-colour-dark);
+}
+
+.content-box {
+    max-width: 900px;
+    margin: 40px auto 0 auto;
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(53,114,239,0.10);
+    padding: 32px 24px 32px 24px;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.18s, color 0.18s;
+    cursor: pointer;
+    border: none;
+    font-family: var(--header-font), sans-serif;
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, var(--primary-colour-dark) 60%, var(--primary-colour) 100%);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(90deg, #1565c0 60%, var(--primary-colour) 100%);
+    color: var(--white);
+}
+
+.btn-danger {
+    background: #e53935;
+    color: var(--white);
+}
+
+.btn-danger:hover {
+    background: #b71c1c;
+    color: var(--white);
+}
+
+.btn-sm {
+    font-size: 0.95em;
+    padding: 6px 14px;
+}
+
+.card-trend {
+    margin-bottom: 18px;
+    border: 1px solid #e3eafc;
+    border-radius: 10px;
+    padding: 18px 20px;
+    background: #f8fbff;
+    box-shadow: 0 2px 8px rgba(53,114,239,0.06);
+}
+
+.badge {
+    display: inline-block;
+    background: #e3f0ff;
+    color: var(--primary-colour-dark);
+    border-radius: 6px;
+    padding: 2px 10px;
+    font-size: 0.95em;
+    font-weight: 600;
+}
+
+.progress {
+    width: 100%;
+    background: #e3eafc;
+    border-radius: 6px;
+    height: 12px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary-colour-dark);
+    border-radius: 6px;
+    transition: width 0.4s;
+}
+
+.pagination {
+    margin-top: 24px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+.pagination a {
+    display: inline-block;
+    margin: 0 2px;
+    padding: 7px 16px;
+    border-radius: 7px;
+    background: #e3f0ff;
+    color: var(--primary-colour-dark);
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 1.08em;
+    border: 2px solid transparent;
+    transition: background 0.18s, color 0.18s, border 0.18s, transform 0.12s;
+    box-shadow: 0 1px 4px rgba(53,114,239,0.04);
+}
+
+.pagination a.active,
+.pagination a:hover {
+    background: var(--primary-colour-dark);
+    color: var(--white);
+    border: 2px solid var(--primary-colour);
+    transform: scale(1.08);
+}
+
+.filter-box {
+    margin-bottom: 18px;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f4f8fd;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(53,114,239,0.06);
+}
+
+.filter-box label {
+    font-weight: 600;
+    color: var(--primary-colour-dark);
+    margin-right: 6px;
+    font-size: 1em;
+}
+
+.filter-box select {
+    padding: 7px 16px;
+    border-radius: 7px;
+    border: 1.5px solid #cfd8dc;
+    font-size: 1em;
+    background: var(--white);
+    color: var(--primary-colour-dark);
+    font-weight: 600;
+    transition: border 0.18s;
+    box-shadow: 0 1px 4px rgba(53,114,239,0.03);
+}
+
+.filter-box select:focus {
+    border: 1.5px solid var(--primary-colour-dark);
+    outline: none;
+    background: #e3f0ff;
+}
+
+@media (max-width: 700px) {
+    .content-box {
+        padding: 16px 4vw;
+    }
+    .card-trend {
+        padding: 12px 8px;
+    }
+    .d-flex {
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    .filter-box {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        padding: 8px 4vw;
+    }
+    .pagination a {
+        padding: 7px 10px;
+        font-size: 1em;
+    }
+}
