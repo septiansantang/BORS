@@ -173,6 +173,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="Jakarta">Jakarta</option>
                         <option value="Bandung">Bandung</option>
                         <option value="Surabaya">Surabaya</option>
+                        <option value="Medan">Medan</option>
+                        <option value="Yogyakarta">Yogyakarta</option>
+                        <option value="Bali">Bali</option>  
+                        <option value="Makassar">Makassar</option>
+                        <option value="Semarang">Semarang</option>
+                        <option value="Mataram">Mataram</option>
+                        <option value="Batam">Batam</option>
+                        <option value="Malang">Malang</option>
+                        <option value="Bandar Lampung">Bandar Lampung</option>
+                        <option value="Pekanbaru">Pekanbaru</option>
                     </select>
                 </div>
 

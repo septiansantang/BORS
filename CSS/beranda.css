@@ -30,6 +30,7 @@ body {
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
     position: fixed;
     padding: 20px;
+    transition: transform 0.3s ease;
 }
 
 .header {
@@ -46,6 +47,7 @@ body {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    pointer-events: auto !important;
 }
 
 .list-item:hover, .list-item.active {
@@ -58,6 +60,7 @@ body {
     text-decoration: none;
     color: var(--text-dark);
     width: 100%;
+    pointer-events: auto !important;
 }
 
 .list-item i {
@@ -83,6 +86,7 @@ body {
     margin-left: 240px;
     padding: 20px;
     width: calc(100% - 220px);
+    transition: margin-left 0.3s ease;
 }
 
 .content-box {
@@ -139,17 +143,25 @@ body {
 
 .progress-bar {
     height: 100%;
-    background-color: #0d6efd;
     transition: width 0.3s ease;
 }
 
+.progress-bar.pending { background-color: #ffc107; }
+.progress-bar.diterima { background-color: #28a745; }
+.progress-bar.selesai { background-color: #0d6efd; }
+.progress-bar.ditolak { background-color: #dc3545; }
+
 .badge {
-    background-color: #0d6efd;
-    color: var(--white);
     font-size: 12px;
     padding: 5px 10px;
     border-radius: 12px;
+    color: var(--white);
 }
+
+.badge.pending { background-color: #ffc107; }
+.badge.diterima { background-color: #28a745; }
+.badge.selesai { background-color: #0d6efd; }
+.badge.ditolak { background-color: #dc3545; }
 
 .notification {
     position: relative;
@@ -166,6 +178,50 @@ body {
     padding: 4px 6px;
     border-radius: 50%;
 }
+
+
+        .mini-stats { display: flex; gap: 18px; margin-bottom: 24px; }
+        .mini-card {
+            background: #f8fbff;
+            border: 1px solid #e3eafc;
+            border-radius: 10px;
+            padding: 18px;
+            min-width: 140px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(53,114,239,0.06);
+        }
+        .mini-card h5 { margin: 0 0 6px 0; font-size: 1.08em; color: #1976d2; }
+        .mini-card .mini-value { font-size: 1.5em; font-weight: bold; color: #1565c0; }
+        .mini-card .mini-icon { font-size: 1.5em; margin-bottom: 6px; color: #42A5F5; }
+        @media (max-width: 700px) {
+            .mini-stats { flex-direction: column; gap: 10px; }
+        }
+        .alert { padding: 10px; margin-bottom: 15px; border-radius: 5px; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .notification-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: #fff;
+            border: 1px solid #e3eafc;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            min-width: 250px;
+            z-index: 1000;
+            display: none;
+        }
+        .notification:hover .notification-dropdown {
+            display: block;
+        }
+        .notification-item {
+            padding: 10px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .notification-item:last-child {
+            border-bottom: none;
+        }
 
 .btn-primary {
     background-color: #0d6efd;
@@ -220,9 +276,439 @@ body {
     object-fit: cover;
     margin-bottom: 10px;
 }
-.form-group input {
+
+.form-group {
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-dark);
+    font-size: 14px;
+}
+
+.form-group input,
+.form-group textarea {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group .error {
+    color: #dc3545;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}
+
+.alert {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Responsivitas */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .hamburger {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        font-size: 24px;
+        cursor: pointer;
+        z-index: 1000;
+    }
+}
+
+.floating-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--primary-colour);
+    color: var(--white);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    font-size: 24px;
+    z-index: 1000;
+}
+.floating-btn:hover {
+    background-color: #0056b3;
+}
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background-color: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: var(--shadow);
+}
+.modal-content h4 {
+    margin-bottom: 20px;
+    color: var(--text-dark);
+}
+.modal-content .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--text-dark);
+}
+@media (max-width: 768px) {
+    .floating-btn {
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+.transaction-table th, .transaction-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+.transaction-table th {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
+.transaction-table tr:hover {
+    background-color: var(--background);
+}
+@media (max-width: 768px) {
+    .transaction-table {
+        font-size: 0.9rem;
+    }
+    .transaction-table th, .transaction-table td {
+        padding: 8px;
+    }
+}
+
+/* ===== Import Font dari file pertama ===== */
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cal+Sans&display=swap');
+
+/* ===== Variabel Utama (gabungan) ===== */
+:root {
+    --primary-colour: #333;
+    --primary-colour-dark: #050C9C;
+    --primary-gradient: linear-gradient(90deg, var(--primary-colour-dark) 60%, var(--primary-colour) 100%);
+    --secondary-gradient: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+    --text-dark: #212529;
+    --text-light: #6C757D;
+    --text-grey: #ADB5BD;
+    --accent: #3ABEF9;
+    --accent-light: #A7E6FF;
+    --white: #FFFFFF;
+    --bg-light: #F8FCFF;
+    --shadow: 0px 0px 30px 0px rgba(0, 0, 0, 0.08);
+    --radius: 14px;
+    --header-font: "Lato","Oswald",sans-serif;
+    --max-width: 1200px;
+}
+
+/* ===== Reset dan Font ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-light);
+    font-family: var(--header-font);
+    color: var(--text-dark);
+    min-height: 100vh;
+}
+
+/* ===== Layout dan Struktur ===== */
+/* (semua isi file kedua tetap) */
+
+/* Tambahkan bagian baru dari file pertama di bawah ini */
+.btn, .btn-primary, .btn-secondary, button {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    font-family: var(--header-font);
+    background: var(--primary-gradient);
+    color: var(--white);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    box-shadow: 0 2px 8px rgba(53,114,239,0.08);
+    margin-top: 10px;
+}
+
+.btn-primary:hover, .btn-secondary:hover, .btn:hover, button:hover {
+    background: linear-gradient(90deg, #1565c0 60%, var(--primary-colour) 100%);
+    box-shadow: 0 8px 24px rgba(53,114,239,0.13);
+    transform: translateY(-2px) scale(1.04);
+}
+
+.btn-danger {
+    background: #e53935;
+    color: #fff;
+}
+.btn-danger:hover {
+    background: #b71c1c;
+}
+
+.btn-sm {
+    font-size: 0.95em;
+    padding: 6px 14px;
+}
+
+.btn-group > .btn,
+.btn-group > .btn-primary,
+.btn-group > .btn-secondary,
+.btn-group > button {
+    margin-right: 16px;
+    margin-top: 10px;
+    padding: 10px 20px;
+    font-size: 14px;
+}
+.btn-group > .btn:last-child,
+.btn-group > .btn-primary:last-child,
+.btn-group > .btn-secondary:last-child,
+.btn-group > button:last-child {
+    margin-right: 0;
+}
+
+/* ===== Tambahan Komponen Modern ===== */
+.card-analitik {
+    background: linear-gradient(135deg, #e3f0ff 0%, #f8fbff 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(66, 165, 245, 0.10);
+    padding: 36px 24px 28px 24px;
+    text-align: center;
+    border: 1px solid #e3eafc;
+    transition: transform 0.18s, box-shadow 0.18s;
+    position: relative;
+}
+.card-analitik:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 8px 32px rgba(66, 165, 245, 0.18);
+    border-color: #90caf9;
+}
+.card-analitik h6 {
+    color: #1976D2;
+    font-size: 1.08rem;
+    margin-bottom: 12px;
+    letter-spacing: 0.5px;
+}
+.card-analitik p {
+    font-size: 2.1rem;
+    margin: 0;
+    color: #1565c0;
+    font-weight: bold;
+}
+
+.grafik-box {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(66, 165, 245, 0.10);
+    padding: 32px 20px 24px 20px;
+    margin: 40px auto 0 auto;
+    max-width: 750px;
+}
+.grafik-box h5 {
+    color: #1976D2;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+#grafik-empty {
+    text-align: center;
+    color: #b0b0b0;
+    margin-top: 18px;
+    font-size: 1.1rem;
+}
+
+.escrow-saldo-box {
+    background: linear-gradient(90deg, #e3f0ff 60%, #f8fbff 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 18px rgba(66, 165, 245, 0.10);
+    padding: 32px 38px 28px 38px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    border: 1.5px solid #e3eafc;
+    min-height: 120px;
+}
+.escrow-saldo-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.escrow-saldo-title {
+    font-size: 1.35em;
+    font-weight: 800;
+    color: #1976d2;
+    margin-bottom: 2px;
+    letter-spacing: 0.5px;
+}
+.escrow-saldo-label {
+    font-size: 1.08em;
+    color: #1565c0;
+    font-weight: 600;
+}
+.escrow-saldo-value {
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #388e3c;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    text-shadow: 0 2px 8px rgba(56,142,60,0.08);
+}
+.escrow-saldo-btn {
+    background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 34px;
+    font-size: 1.13em;
+    font-weight: 800;
+    box-shadow: 0 2px 8px rgba(53,114,239,0.08);
+    transition: background 0.18s, box-shadow 0.18s, transform 0.12s;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 0.5px;
+}
+.escrow-saldo-btn:hover {
+    background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+    color: #fff;
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 8px 24px rgba(53,114,239,0.13);
+}
+@media (max-width: 700px) {
+    .escrow-saldo-box {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 18px 12px;
+        gap: 14px;
+        min-height: unset;
+    }
+    .escrow-saldo-btn {
+        width: 100%;
+        text-align: center;
+        padding: 14px 0;
+        font-size: 1.08em;
+    }
+}
+
+.profile-info {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile-info div {
+    margin-bottom: 15px;
+    font-size: 1rem;
+    color: #495057;
+}
+
+.profile-info b {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.profile-info img {
+    border-radius: 10px;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-top: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-info a.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 5px;
+    background-color: #6c757d;
+    color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+
+.profile-info a.btn:hover {
+    background-color: #5a6268;
 }
